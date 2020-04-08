@@ -22,7 +22,8 @@ let package = Package(
 let package = Package(
 	name: "PerfectSQLite",
 	platforms: [
-		.macOS(.v10_15)
+		.macOS(.v10_15),
+		.iOS(.v13),
 	],
 	products: [
 		.library(name: "PerfectSQLite", targets: ["PerfectSQLite"])

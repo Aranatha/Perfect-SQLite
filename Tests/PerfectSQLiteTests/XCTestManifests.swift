@@ -18,7 +18,7 @@
 
 import XCTest
 
-#if !os(OSX)
+#if !os(OSX) && !os(iOS)
 public func allTests() -> [XCTestCaseEntry] {
 	return [
 			testCase(PerfectSQLiteTests.allTests)
