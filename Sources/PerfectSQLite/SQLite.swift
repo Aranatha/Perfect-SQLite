@@ -24,6 +24,7 @@ import SwiftGlibc
 #else
 import SQLite3
 #endif
+import Foundation
 
 /// This enum type indicates an exception when dealing with a SQLite database
 public struct SQLiteError : Error, CustomStringConvertible {
@@ -343,6 +344,17 @@ public class SQLiteStmt {
     /// - throws: ()
 	public func bind(position: Int, _ b: [UInt8]) throws {
 		try checkRes(sqlite3_bind_blob(self.stat!, Int32(position), b, Int32(b.count), unsafeBitCast(OpaquePointer(bitPattern: -1), to: sqlite_destructor.self)))
+	}
+
+	/// Bind the Data blob value to the indicated parameter.
+    ///
+    /// - parameter position: Int position of binding
+    /// - parameter b: Data blob to be bound
+    /// - throws: ()
+	public func bind(position: Int, _ b: Data) throws {
+		try b.withUnsafeBytes { b in
+			try checkRes(sqlite3_bind_blob(self.stat!, Int32(position), b.baseAddress, Int32(b.count), unsafeBitCast(OpaquePointer(bitPattern: -1), to: sqlite_destructor.self)))
+		}
 	}
 
 	/// Bind a blob of `count` zero values to the indicated parameter.

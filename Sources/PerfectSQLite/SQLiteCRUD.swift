@@ -442,6 +442,8 @@ class SQLiteExeDelegate: SQLExeDelegate {
 			try statement.bind(position: position, Double(d))
 		case .sblob(let b):
 			try statement.bind(position: position, b.map{UInt8(bitPattern: $0)})
+		case .data(let b):
+			try statement.bind(position: position, b)
 		}
 	}
 }
